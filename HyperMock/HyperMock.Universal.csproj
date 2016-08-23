@@ -107,6 +107,8 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AsyncReturnBehaviour.cs" />
+    <Compile Include="AsyncVoidReturnBehaviour.cs" />
     <Compile Include="CallInfo.cs" />
     <Compile Include="Exceptions\MockException.cs" />
     <Compile Include="Exceptions\VerificationException.cs" />

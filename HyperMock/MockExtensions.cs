@@ -1,5 +1,6 @@
 using System;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using HyperMock.Universal.Exceptions;
 
 namespace HyperMock.Universal
@@ -45,6 +46,41 @@ namespace HyperMock.Universal
         }
 
         /// <summary>
+        /// Setup of a function with a return of type <see cref="System.Threading.Tasks.Task"/>.
+        /// </summary>
+        /// <typeparam name="TMock">Mocked type</typeparam>
+        /// <param name="instance">Mocked instance</param>
+        /// <param name="expression">Method expression</param>
+        /// <returns>Function behaviours</returns>
+        public static AsyncVoidReturnBehaviour<TMock> Setup<TMock>(
+            this TMock instance, Expression<Func<TMock, Task>> expression)
+        {
+            var dispatcher = GetDispatcher(instance);
+
+            var callInfo = dispatcher.CreateForFunction(expression);
+
+            return new AsyncVoidReturnBehaviour<TMock>(callInfo);
+        }
+
+        /// <summary>
+        /// Setup of a function with a return of type <see cref="System.Threading.Tasks.Task{TResult}"/>.
+        /// </summary>
+        /// <typeparam name="TMock">Mocked type</typeparam>
+        /// <typeparam name="TReturn">Return type</typeparam>
+        /// <param name="instance">Mocked instance</param>
+        /// <param name="expression">Function expression</param>
+        /// <returns>Function behaviours</returns>
+        public static AsyncReturnBehaviour<TMock, TReturn> Setup<TMock, TReturn>(
+            this TMock instance, Expression<Func<TMock, Task<TReturn>>> expression)
+        {
+            var dispatcher = GetDispatcher(instance);
+
+            var callInfo = dispatcher.CreateForFunction(expression);
+
+            return new AsyncReturnBehaviour<TMock, TReturn>(callInfo);
+        }
+
+        /// <summary>
         /// Setup of a property read.
         /// </summary>
         /// <typeparam name="TMock">Mocked type</typeparam>
@@ -61,6 +97,43 @@ namespace HyperMock.Universal
 
             return new ReturnBehaviour<TMock, TReturn>(callInfo);
         }
+
+        /// <summary>
+        /// Setup of a property read with a return of type <see cref="System.Threading.Tasks.Task"/>.
+        /// </summary>
+        /// <typeparam name="TMock">Mocked type</typeparam>
+        /// <typeparam name="TReturn">Return type</typeparam>
+        /// <param name="instance">Mocked instance</param>
+        /// <param name="expression">Read property expression</param>
+        /// <returns>Read property behaviours</returns>
+        public static AsyncVoidReturnBehaviour<TMock> SetupGet<TMock, TReturn>(
+            this TMock instance, Expression<Func<TMock, Task>> expression)
+        {
+            var dispatcher = GetDispatcher(instance);
+
+            var callInfo = dispatcher.CreateForReadProperty(expression);
+
+            return new AsyncVoidReturnBehaviour<TMock>(callInfo);
+        }
+
+        /// <summary>
+        /// Setup of a property read with a return of type <see cref="System.Threading.Tasks.Task{TResult}"/>.
+        /// </summary>
+        /// <typeparam name="TMock">Mocked type</typeparam>
+        /// <typeparam name="TReturn">Return type</typeparam>
+        /// <param name="instance">Mocked instance</param>
+        /// <param name="expression">Read property expression</param>
+        /// <returns>Read property behaviours</returns>
+        public static AsyncReturnBehaviour<TMock, TReturn> SetupGet<TMock, TReturn>(
+            this TMock instance, Expression<Func<TMock, Task<TReturn>>> expression)
+        {
+            var dispatcher = GetDispatcher(instance);
+
+            var callInfo = dispatcher.CreateForReadProperty(expression);
+
+            return new AsyncReturnBehaviour<TMock, TReturn>(callInfo);
+        }
+
         /// <summary>
         /// Setup of a property write.
         /// </summary>
