@@ -152,5 +152,74 @@ namespace Tests.HyperMock.Universal
 
             Assert.IsTrue(result);
         }
+
+        [TestMethod]
+        public async Task ReturnsTrueForMatchingParameterAsyncWhenUsingCompletesWith()
+        {
+            var proxy = Mock.Create<IUserService>();
+            proxy.Setup(p => p.SaveAsync("Homer")).CompletesWith(true);
+
+            var controller = new UserController(proxy);
+
+            var result = await controller.SaveAsync("Homer");
+
+            Assert.IsTrue(result);
+        }
+
+        [TestMethod]
+        public async Task ReturnsCanceledTask()
+        {
+            var proxy = Mock.Create<IUserService>();
+            proxy.Setup(p => p.SaveAsync("Homer")).Cancels();
+
+            var controller = new UserController(proxy);
+
+            try
+            {
+                var result = await controller.SaveAsync("Homer");
+            }
+            catch (Exception ex)
+            {
+                Assert.IsInstanceOfType(ex, typeof(TaskCanceledException));
+            }
+        }
+
+        [TestMethod]
+        public async Task ReturnsFailedTaskWithExceptionOfType()
+        {
+            var proxy = Mock.Create<IUserService>();
+            proxy.Setup(p => p.SaveAsync("Homer")).FailsWith<TimeoutException>();
+
+            var controller = new UserController(proxy);
+
+            try
+            {
+                var result = await controller.SaveAsync("Homer");
+            }
+            catch (Exception ex)
+            {
+                Assert.IsInstanceOfType(ex, typeof(TimeoutException));
+            }
+        }
+
+        [TestMethod]
+        public async Task ReturnsFailedTaskWithExceptionInstance()
+        {
+            var proxy = Mock.Create<IUserService>();
+            TimeoutException exception = new TimeoutException();
+
+            proxy.Setup(p => p.SaveAsync("Homer")).FailsWith(exception);
+
+            var controller = new UserController(proxy);
+
+            try
+            {
+                var result = await controller.SaveAsync("Homer");
+            }
+            catch (Exception ex)
+            {
+                Assert.AreSame(exception, ex);
+            }
+        }
     }
 }
