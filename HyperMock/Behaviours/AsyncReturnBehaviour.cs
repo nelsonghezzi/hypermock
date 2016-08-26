@@ -1,4 +1,4 @@
-﻿namespace HyperMock.Universal
+﻿namespace HyperMock.Universal.Behaviours
 {
     using System;
     using System.Threading;

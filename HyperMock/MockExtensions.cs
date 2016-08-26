@@ -1,6 +1,7 @@
 using System;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using HyperMock.Universal.Behaviours;
 using HyperMock.Universal.Exceptions;
 
 namespace HyperMock.Universal
