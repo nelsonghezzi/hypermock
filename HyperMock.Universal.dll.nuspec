@@ -6,8 +6,8 @@
     <version>1.0.3</version>
     <authors>Hyperbolic Solutions</authors>
     <owners>Hyperbolic Solutions</owners>
-    <projectUrl>https://github.com/steve-hyperbolic/hyper/wiki/HyperMock</projectUrl>
-    <licenseUrl>https://github.com/steve-hyperbolic/hyper/blob/master/LICENSE.txt</licenseUrl>
+    <projectUrl>https://github.com/steve-hyperbolic/hypermock/wiki</projectUrl>
+    <licenseUrl>https://github.com/steve-hyperbolic/hypermock/blob/master/LICENSE.txt</licenseUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Hyperbolic Solutions simple mocking framework for unit testing</description>
     <releaseNotes>Added overload for mock methods throwing an instance of an exception.</releaseNotes>
